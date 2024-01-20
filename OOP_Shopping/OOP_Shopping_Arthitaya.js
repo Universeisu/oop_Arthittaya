@@ -8,7 +8,7 @@ class Customer {
       this.orders.push(order);
     }
   }
-  
+  //name,addressแทนชื่อและที่อยู่ของลูกค้า มีอาร์เรย์ orders เก็บคำสั่งซื้อ มีเมธอด addOrder เพื่อเพิ่มคำสั่งซื้อใหม่
   class Order {
     payment = null;
     orderDetails = [];
