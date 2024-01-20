@@ -12,7 +12,7 @@ class Customer {
   class Order {
     payment = null;
     orderDetails = [];
-    constructor(date, status) {
+    constructor(date, status) { //แทนวันที่และสถานะของคำสั่งซื้อ
       this.date = date;
       this.status = status;
     }
@@ -40,14 +40,14 @@ class Customer {
         weight += this.orderDetails[i].calcTotalWeight();
       }
       return weight;
-    }
+    } //มีเมทอด calcSubTotal, calcTax, calcTotal, calcTotalWeight สำหรับคำนวณยอดรวมต่าง ๆ
     addPayment(payment) {
-      this.payment = payment;
+      this.payment = payment; //เพื่อเพิ่มวิธีการชำระเงิน
     }
-    addOrderDetail(orderDetail) {
+    addOrderDetail(orderDetail) { // เพื่อเพิ่มรายละเอียดคำสั่งซื้อ
       this.orderDetails.push(orderDetail);
     }
-    printDetail() {
+    printDetail() { //เพื่อแสดงรายละเอียดคำสั่งซื้อ
       for (let i = 0; i < this.orderDetails.length; i++) {
               console.log("ลำดับที่ " + (i + 1) + " " + this.orderDetails[i].getDetail());
               }
@@ -56,8 +56,8 @@ class Customer {
           }
   }
   
-  class OrderDetail {
-    item = null;
+  class OrderDetail { //รายละเอียดของคำสั่งซื้อ
+    item = null; //สินค้าที่เลือก
     constructor(quantity, taxStatus) {
       this.quantity = quantity;
       this.taxStatus = taxStatus;
@@ -71,19 +71,20 @@ class Customer {
     calcTotalWeight() {
       return this.item.shippingWeight;
     }
-    addItem(item) {
+      // calcSubTotal, calcTax, calcTotalWeight สำหรับคำนวณยอดรวมต่าง ๆ
+    addItem(item) { //กำหนดสินค้า
       this.item = item;
     }
-    getDetail(){
+    getDetail(){ //คืนค่ารายละเอียดของรายการ
       return(
           this.item.description + " จำนวน " + this.quantity + " รายการ " + " ราคา " + this.calcSubTotal() + " บาท"
       );
     }
   }
   
-  class Item {
+  class Item { //สินค้า
     inStock = true;
-    constructor(shippingWeight, description, price) {
+    constructor(shippingWeight, description, price) { //น้ำหนักการจัดส่ง, คำอธิบาย, และราคาของสินค้า
       this.shippingWeight = shippingWeight;
       this.description = description;
       this.price = price;
@@ -105,55 +106,55 @@ class Customer {
       return this.inStock;
     }
   }
-  
-  class Payment {
-    constructor(amount) {
+  //สำหรับการตั้งค่าสถานะการเข้าพร้อมตรวจสอบสถานะคลังสินค้า
+  class Payment { // คลาสแม่ของวิธีการชำระเงิน
+    constructor(amount) { //จำนวนเงิน
       this.amount = amount;
     }
   }
   
-  class Cash extends Payment {
-    constructor(amount, cashTendered) {
+  class Cash extends Payment { //การชำระเงินด้วยเงินสด
+    constructor(amount, cashTendered) { //จำนวนเงินสดที่ให้
       super(amount);
-      this.cashTendered = cashTendered;
+      this.cashTendered = cashTendered; 
     }
-    printDetail(){
+    printDetail(){ //แสดงรายละเอียดของการชำระด้วยเงินสด
       console.log("ชำระด้วยเงินสด จำนวน " + this.amount + " บาท");
     }
   }
   
-  class Check extends Payment {
-    constructor(amount, name, bankID) {
+  class Check extends Payment { //การชำระเงินด้วยเช็ค
+    constructor(amount, name, bankID) { //แทนชื่อเจ้าของเช็คและรหัสธนาคาร
       super(amount);
       this.name = name;
       this.bankID = bankID;
     }
-    authorized() {
+    authorized() { //ตรวจสอบการอนุมัติของเช็ค
       console.log("Authorizing Check");
     }
-    printDetail(){
+    printDetail(){ //แสดงรายละเอียดของการชำระด้วยเช็ค
       console.log("ชำระด้วยเงินเช็ค จำนวน " + this.amount + " บาท");
     }
   }
   
-  class Credit extends Payment {
-    constructor(amount, number, type, expDate) {
+  class Credit extends Payment { //การชำระเงินด้วยบัตรเครดิต
+    constructor(amount, number, type, expDate) { // แทนหมายเลขบัตร, ประเภท, และวันที่หมดอายุของบัตร
       super(amount);
       this.number = number;
       this.type = type;
       this.expDate = expDate;
     }
     authorized() {
-      console.log("Authorizing Credit Card");
+      console.log("Authorizing Credit Card"); // เพื่อตรวจสอบการอนุมัติของบัตรเครดิต
     }
-    printDetail(){
+    printDetail(){ //แสดงรายละเอียดของการชำระด้วยบัตรเครดิต
       console.log("ชำระด้วยเงินบัตรเครดิต จำนวน " + this.amount + " บาท");
     }
   }
   
   // const Oldmain = () =>{
   //     let customer1 = new Customer("Worachet Uttha", "Nakhon Pathom");
-  //     let customer2 = new Customer("Sakkarin Naja", "Nakhon Pathom");
+  //     let customer2 = new Customer("Fah", "Nakhon Pathom");
   //     //console.log(customer1);
   //     //Product
   //     const item1 = new Item(0.3, "ออลอินวันบักเก็ต", 299);
@@ -223,8 +224,8 @@ class Customer {
   
   // const main = () => {
   //     // สร้างข้อมูลลูกค้า
-  //     let customer1 = new Customer("Angkan", "Nakhon Pathom");
-  //     let customer2 = new Customer("Thirayut", "Nakhon Pathom");
+  //     let customer1 = new Customer("Burit", "Ratchaburi");
+  //     let customer2 = new Customer("Mind", "Nakhon Pathom");
   //     //console.log(customer1);
   
   //     // สร้างสินค้า Item
@@ -321,8 +322,8 @@ class Customer {
   // }
   const main = () => {
     // สร้างข้อมูลลูกค้า
-    let customer1 = new Customer("Angkan", "Nakhon Pathom");
-    let customer2 = new Customer("Thirayut", "Nakhon Pathom");
+    let customer1 = new Customer("Burit", "Ratchaburi");
+    let customer2 = new Customer("Mind", "Nakhon Pathom");
     //console.log(customer1);
   
     // สร้างสินค้า Item
